@@ -9,14 +9,10 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# recursos = {   
-#             r"/leads/*": {"origins":"*"},
-#             # r"/leads/*": {"origins": "https://www.vizilotes.com.br/"},
-#             r"/empreendimento/*":{"origins":"*"}
-#             }
-
-
-# cors = CORS(app, resources=recursos)
+recursos = {   
+            r"/calculadora/*":{"origins":"*"}
+            }
+cors = CORS(app, resources=recursos)
 
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{}:{}@{}/{}'.format(os.getenv('login_sql_tech'), os.getenv('senha_sql_tech'), os.getenv('host_sql_tech'), os.getenv('database_sql_tech'))
