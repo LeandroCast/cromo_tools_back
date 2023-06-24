@@ -39,8 +39,10 @@ class calculadora_view(FlaskView):
                 if str(tem_balao).lower() == 'false': tem_balao = False
             except:
                 tem_balao = False
-            valor_balao = float(body.get('valor_balao'))
+            valor_balao = body.get('valor_balao')
             data_inicio_balao = body.get('data_inicio_balao')
+            if tem_balao:
+                valor_balao = float(valor_balao)
             
             # try:
             #     tem_parciais = body.get('tem_parciais')
