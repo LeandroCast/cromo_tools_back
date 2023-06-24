@@ -114,9 +114,17 @@ class prep_dados():
         return treated_data,treated_data_json
     
     def str_to_date(self,data):
-        dia = str(data)[:2]
-        mes = str(data)[3:5]
-        ano = str(data)[6:10]
+        # 2023-06-26
+        if data[5]=='-':
+            dia = str(data)[8:]
+            mes = str(data)[5:7]
+            ano = str(data)[:4]
+
+        #06-26-2023
+        else:
+            dia = str(data)[:2]
+            mes = str(data)[3:5]
+            ano = str(data)[6:10]
 
         date =  dt.datetime(int(ano),int(mes),int(dia))
         return date
