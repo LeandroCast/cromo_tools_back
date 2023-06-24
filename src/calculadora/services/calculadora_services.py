@@ -115,7 +115,8 @@ class prep_dados():
     
     def str_to_date(self,data):
         # 2023-06-26
-        if data[5]=='-':
+        print(data,data[4])
+        if data[4]=='-':
             dia = str(data)[8:]
             mes = str(data)[5:7]
             ano = str(data)[:4]
