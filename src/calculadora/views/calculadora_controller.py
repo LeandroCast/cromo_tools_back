@@ -22,10 +22,10 @@ class calculadora_view(FlaskView):
 
             # id_empreendimento = int(body.get('id_empreendimento'))
             id_empreendimento = '1'
-            valor_lote = body.get('valor_lote')
+            valor_lote = float(body.get('valor_lote'))
             data_referencia_juros = dt.datetime.today()
             
-            valor_entrada = body.get('valor_entrada')
+            valor_entrada = float(body.get('valor_entrada'))
             qtd_entrada = int(body.get('qtd_entrada'))
             data_inicio_entrada = body.get('data_inicio_entrada')
             percent_valor_entrada = valor_entrada/valor_lote
@@ -39,7 +39,7 @@ class calculadora_view(FlaskView):
                 if str(tem_balao).lower() == 'false': tem_balao = False
             except:
                 tem_balao = False
-            valor_balao = body.get('valor_balao')
+            valor_balao = float(body.get('valor_balao'))
             data_inicio_balao = body.get('data_inicio_balao')
             
             # try:
