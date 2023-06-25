@@ -75,6 +75,7 @@ class prep_dados():
         #             'entrada_minima' : entrada_minima,
         #         }
         # else:
+        valor_parcela = round(valor_parcela,2)
         if valor_parcela==valor_reduzida==entrada_minima==valor_entrada==tem_parciais==tem_balao==valor_reduzida_sem_juros==qtd_balao==valor_balao_sem_juros==0:
             treated_data = {
                         'status':404,
