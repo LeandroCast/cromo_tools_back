@@ -182,11 +182,11 @@ class main():
             '1':527
         }
     
-    def npv(self.juros_amortizacao,listFluxo):
+    def npv(juros_amortizacao,listFluxo):
         sum_pv = 0  # <-- variable used to sum result
 
         for i, pmt in enumerate(listFluxo, start=1):  # <-- use of enumerate allows you to do away with the counter variables.
-            sum_pv += pmt / ((1 + self.juros_amortizacao) ** i)  # <-- add pv of one of the cash flows to the sum variable
+            sum_pv += pmt / ((1 + juros_amortizacao) ** i)  # <-- add pv of one of the cash flows to the sum variable
 
         return sum_pv  # <-- only return the sum after your loop has completed.
 
