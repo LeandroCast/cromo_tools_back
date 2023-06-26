@@ -87,7 +87,7 @@ class calculadora_view(FlaskView):
                 msg = 'Entrada menor do que o mínimo permitido (%s)'%(valor_lote/10)
                 return jsonify({"status":404,"message":msg})
             
-            if dt.date.now() > data_inicio_entrada.date:
+            if dt.date.today() > data_inicio_entrada.date:
                 print('A data de vencimento da entrada não pode ser anterior ao dia de hoje.')
                 return jsonify({"status":404,"message":"A data de vencimento da entrada não pode ser anterior ao dia de hoje."})
             
