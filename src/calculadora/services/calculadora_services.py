@@ -182,7 +182,7 @@ class main():
             '1':527
         }
     
-    def npv(juros_amortizacao,listFluxo):
+    def npv(self,juros_amortizacao,listFluxo):
         sum_pv = 0  # <-- variable used to sum result
 
         for i, pmt in enumerate(listFluxo, start=1):  # <-- use of enumerate allows you to do away with the counter variables.
