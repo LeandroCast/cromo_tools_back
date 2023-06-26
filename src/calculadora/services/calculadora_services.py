@@ -181,7 +181,15 @@ class main():
             '2032':527,
             '1':527
         }
- 
+    
+    def npv(self.juros_amortizacao,listFluxo):
+        sum_pv = 0  # <-- variable used to sum result
+
+        for i, pmt in enumerate(listFluxo, start=1):  # <-- use of enumerate allows you to do away with the counter variables.
+            sum_pv += pmt / ((1 + self.juros_amortizacao) ** i)  # <-- add pv of one of the cash flows to the sum variable
+
+        return sum_pv  # <-- only return the sum after your loop has completed.
+
     def pgto(self,pv,i,n):
         pmt = (pv * i) / (1 - (1 + i) ** -n)
         return pmt
@@ -209,13 +217,15 @@ class main():
         elif qtd_entrada == 2: listFluxo = [0,0,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida]
         elif qtd_entrada == 3: listFluxo = [0,0,0,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida,valor_reduzida]
         # print('REDUZIDA--------------->',valor_reduzida)
-        vpl = numpy.npv(self.juros_amortizacao,listFluxo)
+        # vpl = numpy.npv(self.juros_amortizacao,listFluxo)
+        vpl = self.npv(self.juros_amortizacao,listFluxo)
         # print('VPL--------------->',vpl)
 
         return vpl/12
     
     def calcula_valor_balao_sem_juros(self,Fluxo_balao,qtd_baloes):
-        vpl = numpy.npv(self.juros_amortizacao,Fluxo_balao['balao'].values)
+        # vpl = numpy.npv(self.juros_amortizacao,Fluxo_balao['balao'].values)
+        vpl = self.npv(self.juros_amortizacao,Fluxo_balao['balao'].values)
         return (vpl/qtd_baloes)
 
 
@@ -863,7 +873,8 @@ class main():
                         listFluxo.append(0)
                     for periodo in range(0,12):
                         listFluxo.append(valorReduzida)
-                    vplReduzida = numpy.npv(self.juros_amortizacao,listFluxo)
+                    # vplReduzida = numpy.npv(self.juros_amortizacao,listFluxo)
+                    vplReduzida = self.npv(self.juros_amortizacao,listFluxo)
                 else:
                     valorReduzida = 0
                     vplReduzida=0
@@ -1169,7 +1180,8 @@ class main():
             mes += 1
         
         #calcula os subtotais das series
-        vpl_balao = numpy.npv(self.juros_amortizacao,fluxo_balao)
+        # vpl_balao = numpy.npv(self.juros_amortizacao,fluxo_balao)
+        vpl_balao = self.npv(self.juros_amortizacao,fluxo_balao)
         total_entrada = percent_valor_entrada * valor_lote
         total_parcelas = valor_lote - total_entrada - vpl_balao
         parcelaSemJuros = total_parcelas/qtd_parcelas
