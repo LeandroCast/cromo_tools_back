@@ -75,7 +75,7 @@ class calculadora_view(FlaskView):
             data_inicio_entrada = prepara_dados.str_to_date(data_inicio_entrada)
             data_inicio_parcelas = prepara_dados.str_to_date(data_inicio_parcelas)
             if tem_balao: data_inicio_balao = prepara_dados.str_to_date(data_inicio_balao)
-            data_inicio_entrada_limite_parcela = dt.date(data_inicio_entrada.year,data_inicio_entrada.month+1,data_inicio_entrada.day)
+            data_inicio_entrada_limite_parcela = dt.datetime(data_inicio_entrada.year,data_inicio_entrada.month+1,data_inicio_entrada.day)
 
             if qtd_parcelas > 240:
                 return {"status":404,"message":"Mais parcelas mensais do que o permitido (240x)"}
