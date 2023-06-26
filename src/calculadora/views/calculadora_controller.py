@@ -81,7 +81,8 @@ class calculadora_view(FlaskView):
                 print('Mais parcelas mensais do que o permitido (240x)')
                 return jsonify({"status":404,"message":"Mais parcelas mensais do que o permitido (240x)"})
 
-            if valor_entrada < valor_lote/10:
+            print(valor_entrada , (valor_lote/10),valor_entrada < (valor_lote/10))
+            if valor_entrada < (valor_lote/10):
                 print('Entrada menor do que o mínimo permitido (%s)'%(valor_lote/10))
                 msg = 'Entrada menor do que o mínimo permitido (%s)'%(valor_lote/10)
                 return jsonify({"status":404,"message":msg})
