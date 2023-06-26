@@ -56,7 +56,7 @@ class calculadora_view(FlaskView):
             
         except Exception as e:
             print(str(e))
-            return '404 - Requisição mal feita' 
+            return {"status":404,"message":'Revise os dados imputados'} 
 
 
         print('===========================================================')
@@ -69,13 +69,33 @@ class calculadora_view(FlaskView):
             calculo = main()
         except Exception as e:
             print(str(e))
-            return '500 - Erro interno'
+            {"status":500,"message":'Serviço fora do ar'}
 
         try:
-            print('calculando valores')
             data_inicio_entrada = prepara_dados.str_to_date(data_inicio_entrada)
             data_inicio_parcelas = prepara_dados.str_to_date(data_inicio_parcelas)
             if tem_balao: data_inicio_balao = prepara_dados.str_to_date(data_inicio_balao)
+            data_inicio_entrada_limite_parcela = dt.date(data_inicio_entrada.year,data_inicio_entrada.month+1,data_inicio_entrada.day)
+
+            if qtd_parcelas > 240:
+                return {"status":404,"message":"Mais parcelas mensais do que o permitido (240x)"}
+
+            if valor_entrada < valor_lote/10:
+                return {"status":404,"message":"Entrada menor do que o mínimo permitido (%s)"%(valor_lote/10)}
+            
+            if qtd_entrada > 5:
+                return {"status":404,"message":"Mais parcelas de entrada do que o permitido (5x)"}
+            
+            if data_inicio_parcelas < data_inicio_entrada:
+                return {"status":404,"message":"A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada"}
+            
+            if data_inicio_balao < data_inicio_entrada:
+                return {"status":404,"message":"A data de vencimento dos balões não pode ser anter da data de vencimento da entrada"}
+            
+            if data_inicio_parcelas > data_inicio_entrada_limite_parcela:
+                return {"status":404,"message":"A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada"}
+
+            print('calculando valores')
             if tem_parciais: 
                 data_inicio_parciais = data_inicio_parcelas
                 data_inicio_parcelas = data_inicio_parciais + relativedelta(months=+12)
