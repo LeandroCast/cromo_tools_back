@@ -52,8 +52,6 @@ class calculadora_view(FlaskView):
             #     tem_parciais = False
             tem_parciais = False
 
-            
-            
         except Exception as e:
             print(str(e))
             return jsonify({"status":404,"message":'Revise os dados imputados'} )
@@ -80,24 +78,31 @@ class calculadora_view(FlaskView):
 
             print('realizando validações')
             if qtd_parcelas > 240:
+                print('Mais parcelas mensais do que o permitido (240x)')
                 return jsonify({"status":404,"message":"Mais parcelas mensais do que o permitido (240x)"})
 
             if valor_entrada < valor_lote/10:
+                print('Entrada menor do que o mínimo permitido (%s)"%(valor_lote/10')
                 return jsonify({"status":404,"message":"Entrada menor do que o mínimo permitido (%s)"%(valor_lote/10)})
             
             if qtd_entrada > 5:
+                print('Mais parcelas de entrada do que o permitido (5x)')
                 return jsonify({"status":404,"message":"Mais parcelas de entrada do que o permitido (5x)"})
             
             if data_inicio_parcelas < data_inicio_entrada:
+                print('A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada')
                 return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada"})
             
             if tem_balao and data_inicio_balao < data_inicio_entrada:
+                print('A data de vencimento dos balões não pode ser anter da data de vencimento da entrada')
                 return jsonify({"status":404,"message":"A data de vencimento dos balões não pode ser anter da data de vencimento da entrada"})
             
             if data_inicio_parcelas > data_inicio_entrada_limite_parcela:
+                print('A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada')
                 return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada"})
 
             if int(data_inicio_parcelas.day) not in[15,20,25]:
+                print('A data de vencimento das parcelas mensais devem ser sempre no dia 15, 20 ou 25')
                 return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais devem ser sempre no dia 15, 20 ou 25"})
             
             print('calculando valores')
