@@ -69,14 +69,16 @@ class calculadora_view(FlaskView):
             calculo = main()
         except Exception as e:
             print(str(e))
-            {"status":500,"message":'Serviço fora do ar'}
+            return {"status":500,"message":'Serviço fora do ar!'}
 
         try:
+            print('convertendo datas')
             data_inicio_entrada = prepara_dados.str_to_date(data_inicio_entrada)
             data_inicio_parcelas = prepara_dados.str_to_date(data_inicio_parcelas)
             if tem_balao: data_inicio_balao = prepara_dados.str_to_date(data_inicio_balao)
             data_inicio_entrada_limite_parcela = dt.datetime(data_inicio_entrada.year,data_inicio_entrada.month+1,data_inicio_entrada.day)
 
+            print('realizando validações')
             if qtd_parcelas > 240:
                 return {"status":404,"message":"Mais parcelas mensais do que o permitido (240x)"}
 
@@ -126,7 +128,7 @@ class calculadora_view(FlaskView):
 
         except Exception as e:
             print('Erro ->',str(e))
-            return '404 - Calculo falhou!!'
+            return {"status":500,"message":'Serviço fora do ar.'}
 
         response = prepara_dados.trata_retorno(valor_parcela,valor_reduzida,entrada_minima*valor_lote,valor_entrada,tem_parciais,tem_balao,valor_reduzida_sem_juros,qtd_balao,valor_balao_sem_juros)
 
