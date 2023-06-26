@@ -4,7 +4,7 @@ from flask import request
 import datetime as dt
 from dateutil.relativedelta import *
 from flask import Response
-import jsonify
+from flask import jsonify
 
 # from src.autenticacao.service.credenciamento_service import autenticacao
 from src.calculadora.services.calculadora_services import prep_dados,fluxo,main
