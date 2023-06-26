@@ -111,6 +111,7 @@ class prep_dados():
                         'valor_reduzida_sem_juros':0
                         }
 
+        treated_data['message'] = 'Calculo feito com sucesso!'
         treated_data_json = jsonify(treated_data)
         return treated_data,treated_data_json
     
