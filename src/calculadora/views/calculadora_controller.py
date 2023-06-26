@@ -89,7 +89,7 @@ class calculadora_view(FlaskView):
             if data_inicio_parcelas < data_inicio_entrada:
                 return {"status":404,"message":"A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada"}
             
-            if data_inicio_balao < data_inicio_entrada:
+            if tem_balao and data_inicio_balao < data_inicio_entrada:
                 return {"status":404,"message":"A data de vencimento dos balões não pode ser anter da data de vencimento da entrada"}
             
             if data_inicio_parcelas > data_inicio_entrada_limite_parcela:
