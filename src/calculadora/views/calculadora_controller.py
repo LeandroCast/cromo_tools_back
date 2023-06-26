@@ -95,6 +95,9 @@ class calculadora_view(FlaskView):
             if data_inicio_parcelas > data_inicio_entrada_limite_parcela:
                 return {"status":404,"message":"A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada"}
 
+            if int(data_inicio_parcelas.day) not in[15,20,25]:
+                return {"status":404,"message":"A data de vencimento das parcelas mensais devem ser sempre no dia 15, 20 ou 25"}
+            
             print('calculando valores')
             if tem_parciais: 
                 data_inicio_parciais = data_inicio_parcelas
