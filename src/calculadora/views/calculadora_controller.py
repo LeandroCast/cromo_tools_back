@@ -56,7 +56,7 @@ class calculadora_view(FlaskView):
             
         except Exception as e:
             print(str(e))
-            return {"status":404,"message":'Revise os dados imputados'} 
+            return jsonify({"status":404,"message":'Revise os dados imputados'} )
 
 
         print('===========================================================')
@@ -69,7 +69,7 @@ class calculadora_view(FlaskView):
             calculo = main()
         except Exception as e:
             print(str(e))
-            return {"status":500,"message":'Serviço fora do ar!'}
+            return jsonify({"status":500,"message":'Serviço fora do ar!'})
 
         try:
             print('convertendo datas')
@@ -80,25 +80,25 @@ class calculadora_view(FlaskView):
 
             print('realizando validações')
             if qtd_parcelas > 240:
-                return {"status":404,"message":"Mais parcelas mensais do que o permitido (240x)"}
+                return jsonify({"status":404,"message":"Mais parcelas mensais do que o permitido (240x)"})
 
             if valor_entrada < valor_lote/10:
-                return {"status":404,"message":"Entrada menor do que o mínimo permitido (%s)"%(valor_lote/10)}
+                return jsonify({"status":404,"message":"Entrada menor do que o mínimo permitido (%s)"%(valor_lote/10)})
             
             if qtd_entrada > 5:
-                return {"status":404,"message":"Mais parcelas de entrada do que o permitido (5x)"}
+                return jsonify({"status":404,"message":"Mais parcelas de entrada do que o permitido (5x)"})
             
             if data_inicio_parcelas < data_inicio_entrada:
-                return {"status":404,"message":"A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada"}
+                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada"})
             
             if tem_balao and data_inicio_balao < data_inicio_entrada:
-                return {"status":404,"message":"A data de vencimento dos balões não pode ser anter da data de vencimento da entrada"}
+                return jsonify({"status":404,"message":"A data de vencimento dos balões não pode ser anter da data de vencimento da entrada"})
             
             if data_inicio_parcelas > data_inicio_entrada_limite_parcela:
-                return {"status":404,"message":"A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada"}
+                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada"})
 
             if int(data_inicio_parcelas.day) not in[15,20,25]:
-                return {"status":404,"message":"A data de vencimento das parcelas mensais devem ser sempre no dia 15, 20 ou 25"}
+                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais devem ser sempre no dia 15, 20 ou 25"})
             
             print('calculando valores')
             if tem_parciais: 
@@ -128,7 +128,7 @@ class calculadora_view(FlaskView):
 
         except Exception as e:
             print('Erro ->',str(e))
-            return {"status":500,"message":'Serviço fora do ar.'}
+            return jsonify({"status":500,"message":'Serviço fora do ar.'})
 
         response = prepara_dados.trata_retorno(valor_parcela,valor_reduzida,entrada_minima*valor_lote,valor_entrada,tem_parciais,tem_balao,valor_reduzida_sem_juros,qtd_balao,valor_balao_sem_juros)
 
