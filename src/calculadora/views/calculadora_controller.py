@@ -43,6 +43,35 @@ class calculadora_view(FlaskView):
             data_inicio_balao = body.get('data_inicio_balao')
             if tem_balao:
                 valor_balao = float(valor_balao)
+
+
+            if str(valor_lote).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('valor do lote')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
+            if str(data_referencia_juros).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('data referencia juros')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
+            if str(valor_entrada).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Valor entrada')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
+            if str(qtd_entrada).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Quantidade de parcelas de entradas')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
+            if str(data_inicio_entrada).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Data de inicio de entrada')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
+            if str(qtd_parcelas).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Quantidade de parcelas de mensais')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
+            if str(data_inicio_parcelas).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Data de inicio de mensais')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
+            if tem_balao and str(valor_balao).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Valor do balao')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
+            if tem_balao and str(data_inicio_balao).replace(' ','') == '':
+                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Data de inicio dos balões')
+                return jsonify({"status":404,"message":msg},'valor_parcela':'-')
             
             # try:
             #     tem_parciais = body.get('tem_parciais')
@@ -54,7 +83,7 @@ class calculadora_view(FlaskView):
 
         except Exception as e:
             print(str(e))
-            return jsonify({"status":404,"message":'Revise os dados imputados'} )
+            return jsonify({"status":404,"message":'Revise os dados imputados','valor_parcela':'-'} )
 
 
         print('===========================================================')
@@ -67,7 +96,7 @@ class calculadora_view(FlaskView):
             calculo = main()
         except Exception as e:
             print(str(e))
-            return jsonify({"status":500,"message":'Serviço fora do ar!'})
+            return jsonify({"status":500,"message":'Serviço fora do ar!','valor_parcela':'-'})
 
         try:
             print('convertendo datas')
@@ -79,37 +108,37 @@ class calculadora_view(FlaskView):
             print('realizando validações')
             if qtd_parcelas > 240:
                 print('Mais parcelas mensais do que o permitido (240x)')
-                return jsonify({"status":404,"message":"Mais parcelas mensais do que o permitido (240x)"})
+                return jsonify({"status":404,"message":"Mais parcelas mensais do que o permitido (240x)",'valor_parcela':'-'})
 
             print(valor_entrada , (valor_lote/10),valor_entrada < (valor_lote/10))
             if valor_entrada < (valor_lote/10):
                 print('Entrada menor do que o mínimo permitido (%s)'%(valor_lote/10))
                 msg = 'Entrada menor do que o mínimo permitido (%s)'%(valor_lote/10)
-                return jsonify({"status":404,"message":msg})
+                return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             
             if dt.date.today() > data_inicio_entrada.date():
                 print('A data de vencimento da entrada não pode ser anterior ao dia de hoje.')
-                return jsonify({"status":404,"message":"A data de vencimento da entrada não pode ser anterior ao dia de hoje."})
+                return jsonify({"status":404,"message":"A data de vencimento da entrada não pode ser anterior ao dia de hoje.",'valor_parcela':'-'})
             
             if qtd_entrada > 5:
                 print('Mais parcelas de entrada do que o permitido (5x)')
-                return jsonify({"status":404,"message":"Mais parcelas de entrada do que o permitido (5x)"})
+                return jsonify({"status":404,"message":"Mais parcelas de entrada do que o permitido (5x)",'valor_parcela':'-'})
             
             if data_inicio_parcelas < data_inicio_entrada:
                 print('A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada')
-                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada"})
+                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais não pode ser anter da data de vencimento da entrada",'valor_parcela':'-'})
             
             if tem_balao and data_inicio_balao < data_inicio_entrada:
                 print('A data de vencimento dos balões não pode ser anter da data de vencimento da entrada')
-                return jsonify({"status":404,"message":"A data de vencimento dos balões não pode ser anter da data de vencimento da entrada"})
+                return jsonify({"status":404,"message":"A data de vencimento dos balões não pode ser anter da data de vencimento da entrada",'valor_parcela':'-'})
             
             if data_inicio_parcelas > data_inicio_entrada_limite_parcela:
                 print('A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada')
-                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada"})
+                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais não pode ser mais do que 1 mes depois da data de vencimento da entrada",'valor_parcela':'-'})
 
             if int(data_inicio_parcelas.day) not in[15,20,25]:
                 print('A data de vencimento das parcelas mensais devem ser sempre no dia 15, 20 ou 25')
-                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais devem ser sempre no dia 15, 20 ou 25"})
+                return jsonify({"status":404,"message":"A data de vencimento das parcelas mensais devem ser sempre no dia 15, 20 ou 25",'valor_parcela':'-'})
             
             print('calculando valores')
             if tem_parciais: 
@@ -134,12 +163,13 @@ class calculadora_view(FlaskView):
                 treated_data = {
                         'status':404,
                         'message':valor_reduzida, 
+                        'valor_parcela':'-'
                     }
                 return treated_data
 
         except Exception as e:
             print('Erro ->',str(e))
-            return jsonify({"status":500,"message":'Serviço fora do ar.'})
+            return jsonify({"status":500,"message":'Serviço fora do ar.','valor_parcela':'-'})
 
         response = prepara_dados.trata_retorno(valor_parcela,valor_reduzida,entrada_minima*valor_lote,valor_entrada,tem_parciais,tem_balao,valor_reduzida_sem_juros,qtd_balao,valor_balao_sem_juros)
 
