@@ -22,15 +22,15 @@ class calculadora_view(FlaskView):
 
             # id_empreendimento = int(body.get('id_empreendimento'))
             id_empreendimento = '1'
-            valor_lote = float(body.get('valor_lote').replace(',','.'))
+            valor_lote = body.get('valor_lote').replace(',','.')
             data_referencia_juros = dt.datetime.today()
             
-            valor_entrada = float(body.get('valor_entrada').replace(',','.'))
-            qtd_entrada = int(body.get('qtd_entrada'))
+            valor_entrada = body.get('valor_entrada').replace(',','.')
+            qtd_entrada = body.get('qtd_entrada')
             data_inicio_entrada = body.get('data_inicio_entrada')
             percent_valor_entrada = valor_entrada/valor_lote
             
-            qtd_parcelas = int(body.get('qtd_parcelas'))
+            qtd_parcelas = body.get('qtd_parcelas')
             data_inicio_parcelas = body.get('data_inicio_parcela')
             
             try:
@@ -39,11 +39,9 @@ class calculadora_view(FlaskView):
                 if str(tem_balao).lower() == 'false': tem_balao = False
             except:
                 tem_balao = False
-            valor_balao = float(body.get('valor_balao').replace(',','.'))
+            valor_balao = body.get('valor_balao').replace(',','.')
             data_inicio_balao = body.get('data_inicio_balao')
-            if tem_balao:
-                valor_balao = float(valor_balao)
-
+            
 
             if str(valor_lote).replace(' ','') == '':
                 msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('valor do lote')
@@ -73,6 +71,15 @@ class calculadora_view(FlaskView):
                 msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Data de inicio dos balões')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             
+            valor_lote = float(valor_lote)
+            valor_entrada = float(valor_entrada)
+            qtd_entrada = int(qtd_entrada)
+            qtd_parcelas = int(qtd_parcelas)
+            valor_balao = float(valor_balao)
+            if tem_balao:
+                valor_balao = float(valor_balao)
+
+
             # try:
             #     tem_parciais = body.get('tem_parciais')
             #     if str(tem_parciais).lower() == 'true': tem_parciais = True
