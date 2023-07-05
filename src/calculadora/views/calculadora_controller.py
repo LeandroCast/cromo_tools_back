@@ -44,31 +44,31 @@ class calculadora_view(FlaskView):
             
 
             if str(valor_lote).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('valor do lote')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('valor do lote')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             if str(data_referencia_juros).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('data referencia juros')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('data referencia juros')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             if str(valor_entrada).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Valor entrada')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('Valor entrada')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             if str(qtd_entrada).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Quantidade de parcelas de entradas')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('Quantidade de parcelas de entradas')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             if str(data_inicio_entrada).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Data de inicio de entrada')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('Data de inicio de entrada')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             if str(qtd_parcelas).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Quantidade de parcelas de mensais')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('Quantidade de parcelas de mensais')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             if str(data_inicio_parcelas).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Data de inicio de mensais')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('Data de inicio de mensais')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             if tem_balao and str(valor_balao).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Valor do balao')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('Valor do balao')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             if tem_balao and str(data_inicio_balao).replace(' ','') == '':
-                msg = 'Por favor, preencha todos os campos. Campo %s vazio.'%('Data de inicio dos balões')
+                msg = 'Por favor, preencha todos os campos. Campo *%s* vazio.'%('Data de inicio dos balões')
                 return jsonify({"status":404,"message":msg,'valor_parcela':'-'})
             
             valor_lote = float(valor_lote)
