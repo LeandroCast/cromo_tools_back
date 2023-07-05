@@ -28,7 +28,7 @@ class calculadora_view(FlaskView):
             valor_entrada = body.get('valor_entrada').replace(',','.')
             qtd_entrada = body.get('qtd_entrada')
             data_inicio_entrada = body.get('data_inicio_entrada')
-            percent_valor_entrada = valor_entrada/valor_lote
+            
             
             qtd_parcelas = body.get('qtd_parcelas')
             data_inicio_parcelas = body.get('data_inicio_parcela')
@@ -78,6 +78,8 @@ class calculadora_view(FlaskView):
             valor_balao = float(valor_balao)
             if tem_balao:
                 valor_balao = float(valor_balao)
+
+            percent_valor_entrada = valor_entrada/valor_lote
 
 
             # try:
