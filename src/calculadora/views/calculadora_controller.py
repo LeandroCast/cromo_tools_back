@@ -75,7 +75,6 @@ class calculadora_view(FlaskView):
             valor_entrada = float(valor_entrada)
             qtd_entrada = int(qtd_entrada)
             qtd_parcelas = int(qtd_parcelas)
-            valor_balao = float(valor_balao)
             if tem_balao:
                 valor_balao = float(valor_balao)
 
